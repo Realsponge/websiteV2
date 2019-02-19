@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+  <head>
+
+    <!-- Das sind meta tags die gebraucht werden. Sie geben dem Browser verschiedene Daten die wichtig sind.
+         Autor, zuletzt bearbeitet. -->
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <link href="https://fonts.googleapis.com/css?family=Assistant|Luckiest+Guy|Poiret+One|Vollkorn" rel="stylesheet">
+
+    <link href="static/bootstrap.min.css" rel="stylesheet"/>
+    <link href="static/styles.css" rel="stylesheet"/>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
+
+    <!-- google maps settings -->
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
+
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 80%;
+        width: 80%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+
+      }
+    </style>
+    {% block head %} {% endblock %}
+
+    <title> Haomins{% block title %} {% endblock %} </title>
+
+  </head>
+
+  <body>
+    <!-- initialisierung von einem contaniner für die navigationsleiste mit bestimmtem background colour -->
+  <div class="container-fluid" style="background-color: #742435;">
+    <nav class="navbar navbar-expand-md navbar-light" >
+        <a class="navbar-brand" href="/"><font color="white">2018 for Haominze</font></a>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <font color="white">Countries</font>
+                </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="/japan">Japan</a>
+              <a class="dropdown-item" href="/china">China</a>
+              <a class="dropdown-item" href="/norway">Norway</a>
+            </div>
+            </li>
+
+
+
+            <li class="nav-item dropdown mr-sm-2">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <font color="white">Activities</font>
+                </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="/japan">Japan</a>
+              <a class="dropdown-item" href="/suggestion">suggestion</a>
+              <a class="dropdown-item" href="/norway">Norway</a>
+              <a class="dropdown-item" href="/crazy">weird</a>
+            </div>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/suggestion"><font color="white">Which places impressed you 2018?</font></a>
+            </li>
+
+            </ul>
+        </div>
+    </nav>
+  </div>
+    {% block main %} {% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+  </body>
+</html>

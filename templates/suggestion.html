@@ -1,0 +1,183 @@
+
+{% extends "layout.html" %}
+
+{% block head %}
+
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <title>Suggestion</title>
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 90%;
+        width: 90%;
+
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        width: 100%;
+        margin: 50;
+        padding: 10;
+      }
+    </style>
+{% endblock %}
+
+{% block main %}
+
+
+    <div id="map" class="container-fluid p-5"></div>
+
+
+
+
+
+<form action="/suggestion" method="post" id="form">
+    <table>
+        <tr>
+            <td>
+                <div class="form-group">
+                    <input autocomplete ="off" class="form-control" name="what" placeholder="What is there" type="text"/>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="form-group">
+                    <input autocomplete ="off" class="form-control" name="why" placeholder="What did you like about it" type="text"/>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="form-group">
+                    <input autocomplete ="off" class="form-control" name="history" placeholder=" who ru are" type="text"/>
+                </div>
+            </td>
+       </tr>
+        <tr>
+            <td>
+                <!-- ruft die js funktion saveLocation() auf sobald auf submit gedrückt wird -->
+                <button class="btn btn-primary" type="submit" onclick="saveLocation()">Save</button>
+            </td
+        ></tr>
+    </table>
+    <!-- der input type ist hidden, da der nutzer ihn selber nicht bestimmen soll. Der input wird später durch die saveLocation()
+    Funktion ausgegeben. -->
+    <input type="hidden" name="lat1" id="lat1">
+    <input type="hidden" name="lng1" id="lng1">
+</form>
+
+    <script>
+
+        function initMap() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+          center: new google.maps.LatLng(23.863276, 40.207977),
+          zoom: 3,
+          gestureHandling: 'greedy',
+
+        });
+        var infoWindow = new google.maps.InfoWindow;
+
+
+          // Change this depending on the name of your PHP or XML file
+          downloadUrl('static/data2.xml', function(data) {
+            var xml = data.responseXML;
+            var markers = xml.documentElement.getElementsByTagName('marker');
+            Array.prototype.forEach.call(markers, function(markerElem) {
+              var id = markerElem.getAttribute('what');
+              var name = markerElem.getAttribute('why');
+              var address = markerElem.getAttribute('history');
+              var point = new google.maps.LatLng(
+                  parseFloat(markerElem.getAttribute('lat')),
+                  parseFloat(markerElem.getAttribute('lng')));
+
+              var infowincontent = document.createElement('div');
+              var strong = document.createElement('strong');
+              strong.textContent = name
+              infowincontent.appendChild(strong);
+              infowincontent.appendChild(document.createElement('br'));
+
+              var text = document.createElement('text');
+              text.textContent = address
+              infowincontent.appendChild(text);
+
+              var marker = new google.maps.Marker({
+                map: map,
+                position: point,
+
+              });
+              marker.addListener('click', function() {
+                infoWindow.setContent(infowincontent);
+                infoWindow.open(map, marker);
+              });
+            });
+          });
+
+                  infowindow = new google.maps.InfoWindow({
+            content: document.getElementById("form")
+        });
+
+        messagewindow = new google.maps.InfoWindow({
+            content: document.getElementById("message")
+        });
+
+        //diese funktion ist in googlemaps automatisch enthalten und registriert wenn der Nutzer auf die Karte klickt
+        //Es speichert die Position und setzt einen neuen marker auf die Position des klicks.
+        google.maps.event.addListener(map, 'click', function(event) {
+            marker = new google.maps.Marker({
+                position: event.latLng,
+                map: map
+            });
+
+        //Ein Infofenster wird geöffnet wenn auf einen Marker geklickt wird.
+        google.maps.event.addListener(marker, "click", function() {
+            infowindow.open(map, marker);
+        });
+      });
+    }
+
+
+
+      function downloadUrl(url, callback) {
+          //Wie funktioniert diese funktion. was macht es
+        var request = window.ActiveXObject ?
+            new ActiveXObject('Microsoft.XMLHTTP') :
+            new XMLHttpRequest;
+
+        request.onreadystatechange = function() {
+          if (request.readyState == 4) {
+            request.onreadystatechange = doNothing;
+            callback(request, request.status);
+          }
+        };
+
+        request.open('GET', url, true);
+        request.send(null);
+      }
+
+
+    function saveLocation () {
+
+        //marker.getposition ist ein objekt mit zwei keys. lat und lng. diese werden dann aufgerufen mit .lat() und .lng()
+        var latlng = marker.getPosition();
+        var lat = latlng.lat();
+        var lng = latlng.lng();
+        //mithilfe von Javaskripts document.getElemenetById werden die Elemente lat1 und lng1, die vorher ein hidden input waren
+        //genommen und ihnen werden die werden von dem vorher bestimmten lat und lng zugewiesen.
+        //Diese werden werden dann mithilfe der POST method an flask übergeben.
+        document.getElementById("lat1").value = lat
+        document.getElementById("lng1").value = lng
+    }
+
+
+
+      function doNothing() {}
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCQl_vN8s8JxN3muPxqcGY6qpwmtDQr5vU&callback=initMap">
+    </script>
+
+
+{% endblock %}
