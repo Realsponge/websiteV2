@@ -26,7 +26,15 @@
 
 {% block main %}
 
+<div class="alert alert-success" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+  <p>Click on the map to set a marker. Then click on the marker to add information.</p>
 
+
+
+</div>
     <div id="map" class="container-fluid p-5"></div>
 
 
@@ -38,21 +46,21 @@
         <tr>
             <td>
                 <div class="form-group">
-                    <input autocomplete ="off" class="form-control" name="what" placeholder="What is there" type="text"/>
+                    <input autocomplete ="off" class="form-control" name="what" placeholder="What is there?" type="text"/>
                 </div>
             </td>
         </tr>
         <tr>
             <td>
                 <div class="form-group">
-                    <input autocomplete ="off" class="form-control" name="why" placeholder="What did you like about it" type="text"/>
+                    <input autocomplete ="off" class="form-control" name="why" placeholder="What did you like about it?" type="text"/>
                 </div>
             </td>
         </tr>
         <tr>
             <td>
                 <div class="form-group">
-                    <input autocomplete ="off" class="form-control" name="history" placeholder=" who ru are" type="text"/>
+                    <input autocomplete ="off" class="form-control" name="history" placeholder="Hints on who you are?" type="text"/>
                 </div>
             </td>
        </tr>
@@ -102,6 +110,11 @@
               var text = document.createElement('text');
               text.textContent = address
               infowincontent.appendChild(text);
+              infowincontent.appendChild(document.createElement('br'));
+
+              var person = document.createElement('person');
+              person.textContent = id
+              infowincontent.appendChild(person);
 
               var marker = new google.maps.Marker({
                 map: map,
